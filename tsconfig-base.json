@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "ES2021",
+        "esModuleInterop": true,
+        //"lib": ["ES2019", "dom", "dom.iterable"],
+
+
+        "declaration": true, // required to include definition files in output
+        "sourceMap": true,
+
+        "jsx": "react",
+        "moduleResolution": "Node",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "strictBindCallApply": true,
+        //"strictFunctionTypes": true,
+        //"strictPropertyInitialization": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "preserveConstEnums": true,
+
+        "skipLibCheck": true,
+
+        "composite": true,
+        "incremental": true
+    }
+}

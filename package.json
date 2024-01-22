@@ -1,0 +1,33 @@
+{
+    "name": "datavillage-template",
+    "version": "0.0.1",
+    "description": "Template project to deploy in the Datavillage platform",
+    "private": true,
+    "scripts": {
+        "clean": "yarn workspaces run clean",
+        "build": "yarn workspaces run build",
+        "start": "yarn workspace dvtemplate-engine run start",
+        "deploy": "yarn build && yarn workspace dvtemplate-engine build-docker"
+    },
+    "keywords": [],
+    "author": "philippe@datavillage.me",
+    "license": "MIT",
+    "workspaces": [
+        "dvtemplate-core",
+        "dvtemplate-frontend",
+        "dvtemplate-engine"
+    ],
+    "devDependencies": {
+        "shx": "^0.3.4",
+        "typescript": "^4.6.3"
+    },
+    "dependencies": {},
+    "engines": {
+        "node": ">16.0"
+    },
+    "resolutions": {
+        "@types/react": "^17.0.38",
+        "@types/react-dom": "17.0.2",
+        "react": "^17"
+    }
+}
