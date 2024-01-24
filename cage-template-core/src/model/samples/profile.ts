@@ -6,7 +6,7 @@ export const user_001: PersonalProfile = {
 
     // have simple URI list, or extra metadata like date ?
     favourites: [
-        "https://vrt.be/medias/1459955889901"
+        "https://acme.com/objects/001"
     ],
 
     history: [
