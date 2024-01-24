@@ -1,25 +1,25 @@
 {
-    "name": "datavillage-template",
+    "name": "@datavillage-me/cage-template-node",
     "version": "0.0.1",
     "description": "Template project to deploy in the Datavillage platform",
     "private": true,
     "scripts": {
         "clean": "yarn workspaces run clean",
         "build": "yarn workspaces run build",
-        "start": "yarn workspace dvtemplate-engine run start",
-        "deploy": "yarn build && yarn workspace dvtemplate-engine build-docker"
+        "start": "yarn workspace cage-template-engine run start",
+        "deploy": "yarn build && yarn workspace cage-template-engine build-docker"
     },
     "keywords": [],
     "author": "philippe@datavillage.me",
     "license": "MIT",
     "workspaces": [
-        "dvtemplate-core",
-        "dvtemplate-frontend",
-        "dvtemplate-engine"
+        "cage-template-core",
+        "cage-template-frontend",
+        "cage-template-engine"
     ],
     "devDependencies": {
         "shx": "^0.3.4",
-        "typescript": "^4.6.3"
+        "typescript": "4.9.4"
     },
     "dependencies": {},
     "engines": {
