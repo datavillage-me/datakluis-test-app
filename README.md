@@ -12,12 +12,18 @@ This repository contains the codebase to define the object models, processes, an
 
 ## Build & deploy
 
-The whole project can be built, the locally started using
+
+### Local development
+The whole project can be built, then locally started using
 ```
 $dvtemplate> yarn build 
 
 $dvtemplate> yarn start 
 ```
+
+Check the `./cage-template-engine/.env.local` file and copy it to `./cage-template-engine/.env` to locally test the cage process.
+
+### Deploy to docker repo 
 
 The docker image can be built and published using
 ```
