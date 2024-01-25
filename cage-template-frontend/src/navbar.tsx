@@ -13,7 +13,7 @@ export const AppNavBar = () => {
                     <div className="app-logo" />
                 </Box>
                 <Box sx={{flexGrow: 0, marginLeft: "10px", marginRight: "30px", fontSize: '130%'}}>
-                    <div>Templte</div>
+                    <div>SNDK</div>
                     <div style={{fontSize: "90%", color: "#3e8ba6"}}>Recommandations</div>
                 </Box>
 

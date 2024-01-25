@@ -6,7 +6,7 @@
     "scripts": {
         "clean": "yarn workspaces run clean",
         "build": "yarn workspaces run build",
-        "start": "yarn workspace cage-template-engine run start",
+        "start": "yarn workspace @datavillage-me/cage-template-engine run start",
         "deploy": "yarn build && yarn workspace @datavillage-me/cage-template-engine build-docker"
     },
     "keywords": [],
