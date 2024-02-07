@@ -143,7 +143,7 @@ function getBrowserRemoteClient(url: string) {
  * React hook that returns a remote client based on the config in the current or provided AppContext
  * @param ctx
  */
-const useRemoteClient = (ctx?: DatavillageSessionContextType) => {
+export const useRemoteClient = (ctx?: DatavillageSessionContextType) => {
     const sessionContext = useContext(DatavillageSessionContext);
     const validCtx = ctx || sessionContext;
 
@@ -157,7 +157,7 @@ const useRemoteClient = (ctx?: DatavillageSessionContextType) => {
 /**
  * React hook that returns the authenticated session, if any
  */
-const useSession = function (): Session {
+export const useSession = function (): DatavillageSessionContextType {
     const sessionContext = useContext(DatavillageSessionContext);
 
     return sessionContext;

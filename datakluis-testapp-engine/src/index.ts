@@ -12,6 +12,9 @@ import {RedisClientOptions} from "@redis/client";
 import {DatavillageUsersRegistry} from "./users/datavillage";
 import log4js from 'log4js';
 import {ErrorHandler} from "./express/error";
+import {RedisQueue} from "./redis";
+import {RedisCommandArgument} from "@redis/client/dist/lib/commands";
+import {EVENT_TYPES} from "@datavillage-me/cage-template-core";
 
 
 // add some colours to the logging
@@ -29,10 +32,10 @@ dotenv.config();
 log4js.configure({
     appenders: {
         //serverLogs: { type: 'file', filename: 'template-engine.log' },
-        console: { type: 'console' }
+        console: {type: 'console'}
     },
     categories: {
-        default: { appenders: ['console'], level: 'debug' }
+        default: {appenders: ['console'], level: 'debug'}
     }
 });
 
@@ -66,7 +69,7 @@ async function createEngine(userRegistry: UsersRegistry) {
 let serverSettings: {
     "DV_APP_ID": string,
     "DV_CLIENT_ID": string,
-    "DV_SETTINGS" : {
+    "DV_SETTINGS": {
         apiUrl: string,
         loginUrl: string,
         passportUrl: string,
@@ -108,7 +111,7 @@ export async function startExpress(userRegistry: UsersRegistry, engine: Recomman
     const PORT = process.env.PORT || (useHttps ? 5443 : 5000)
 
     server.listen(PORT, async () => {
-        console.log(`Recommandation Server listening on ${useHttps?'HTTPS':'HTTP'}:${PORT}`);
+        console.log(`Recommandation Server listening on ${useHttps ? 'HTTPS' : 'HTTP'}:${PORT}`);
 
         // Do post-start init
     });
@@ -118,7 +121,7 @@ export async function startExpress(userRegistry: UsersRegistry, engine: Recomman
 
 // Connect to Redis - again, decide whether to use HTTPS based on env variables
 const useRedisHttps = config.TLS_CAFILE || new Boolean(config.REDIS_TLS).valueOf();
-console.log(`Connecting to Redis on ${useRedisHttps?'https':'http'}://${config.REDIS_SERVICE_HOST}:${config.REDIS_SERVICE_PORT} ...`)
+console.log(`Connecting to Redis on ${useRedisHttps ? 'https' : 'http'}://${config.REDIS_SERVICE_HOST}:${config.REDIS_SERVICE_PORT} ...`)
 
 // create Redis graph client
 const socket: RedisClientOptions['socket'] = useRedisHttps ?
@@ -142,6 +145,28 @@ redis.on('end', () => {
     console.log('Redis connection ended');
 });
 
+const redisEventProcessor = (engine: RecommandationEngine) => (async (evt: {
+    id: RedisCommandArgument;
+    message: EVENT_TYPES;
+}) => {
+    const originalMessage = evt.message.msg_data ? JSON.parse(evt.message.msg_data) : undefined;
+    const type = originalMessage?.type;
+
+    switch (type) {
+        case 'PING':
+            // produce recommendations for all users
+            console.log(`Event PING ${evt.id}`);
+            break;
+        case 'PROCESS_USERS':
+        // produce recommendations for all users
+            await engine.createAndStoreRecommandationsForUsers();
+            break;
+        default:
+            console.log(`Unknown event ${evt.id}: type ${type}`);
+            console.log(JSON.stringify(evt, undefined, 4));
+            break;
+    }
+})
 
 // Initiate the redis connection
 redis.connect()
@@ -190,8 +215,8 @@ redis.connect()
                 }
 
                 usersReg = new DatavillageUsersRegistry(dvClient, config.DV_CLIENT_ID, config.DV_APP_ID);
-            } catch (err)  {
-                throw new util.WrappedError("Failed to setup connection with Datavillage backend at "+config.DV_URL, err);
+            } catch (err) {
+                throw new util.WrappedError("Failed to setup connection with Datavillage backend at " + config.DV_URL, err);
             }
         } else {
             // We're outside the DV platform
@@ -203,6 +228,10 @@ redis.connect()
         // Create the recommendation engine
         const engine = await createEngine(usersReg);
         console.log(`Recommandation engine ready`)
+
+        const eventQueue = new RedisQueue(redis);
+        await eventQueue.createConsumerGroup();
+        eventQueue.listen(redisEventProcessor(engine));
 
         await startExpress(usersReg, engine);
     });

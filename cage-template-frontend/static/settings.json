@@ -1,10 +1,11 @@
 {
   "DV_APP_ID": "pgbmfpcn",
   "DV_CLIENT_ID": "65b147e1ec14b5d0cb42a969",
+  "ENGINE_API_URL": "https://api.datakluis-dev.datavillage.me/collaborationSpaces/pgbmfpcn/cage/web",
   "DV_SETTINGS": {
     "apiUrl": "https://api.datakluis-dev.datavillage.me",
     "loginUrl": "/login.html",
-    "passportUrl": "http://localhost:4000/passport",
-    "consoleUrl": "http://localhost:5000/passport"
+    "passportUrl": "https://privacycenter.datakluis-dev.datavillage.me/passport",
+    "consoleUrl": "https://console.datakluis-dev.datavillage.me/"
   }
 }

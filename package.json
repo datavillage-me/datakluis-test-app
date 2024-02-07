@@ -1,13 +1,13 @@
 {
-    "name": "@datavillage-me/cage-template-node",
+    "name": "@datakluis/datakluis-testapp",
     "version": "0.0.1",
     "description": "Template project to deploy in the Datavillage platform",
     "private": true,
     "scripts": {
         "clean": "yarn workspaces run clean",
         "build": "yarn workspaces run build",
-        "start": "yarn workspace @datavillage-me/cage-template-engine run start",
-        "deploy": "yarn build && yarn workspace @datavillage-me/cage-template-engine build-docker"
+        "start": "yarn workspace @datakluis/datakluis-testapp-engine run start",
+        "deploy": "yarn build && yarn workspace  @datakluis/datakluis-testapp-engine build-docker"
     },
     "keywords": [],
     "author": "philippe@datavillage.me",
@@ -15,7 +15,7 @@
     "workspaces": [
         "cage-template-core",
         "cage-template-frontend",
-        "cage-template-engine"
+        "datakluis-testapp-engine"
     ],
     "devDependencies": {
         "shx": "^0.3.4",

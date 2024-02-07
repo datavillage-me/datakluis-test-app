@@ -1,7 +1,7 @@
 {
-  "name": "@datavillage-me/cage-template-engine",
+  "name": "@datakluis/datakluis-testapp-engine",
   "version": "0.0.1",
-  "description": "Template recommandation engine",
+  "description": "Datakluis test recommandation engine",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs",
@@ -12,7 +12,7 @@
     "build-cjs": "tsc -b . tsconfig.cjs.json",
     "build-esm": "tsc -b .",
     "build-docker": "yarn build-standalone && yarn docker-build-push",
-    "build-standalone": "rollup -c",
+    "build-standalone": "yarn build && rollup -c",
     "docker-build-push": "set -a && source docker.env && ./docker-build-push.sh"
   },
   "keywords": [],

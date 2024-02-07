@@ -2,7 +2,7 @@ import {httputil, util } from "@datavillage-me/api";
 import {
     Recommendation,
     PersonalProfile,
-    PROFILE_PATH, initPodFolder,
+    PROFILE_PATH, initPodFolder, RECOMMANDATIONS_PATH,
 } from "@datavillage-me/cage-template-core";
 import nodefetch from "node-fetch";
 
@@ -56,7 +56,9 @@ export class HttpUserStorage implements UsersStorage {
     }
 
     async saveRecommandations(recommandations: Recommendation[]): Promise<void> {
-        // TODO
+        await this.fetchFn(this.appFolderUri+RECOMMANDATIONS_PATH, {method: 'PUT', body: JSON.stringify(recommandations, undefined, 4)})
+            .then(httputil.handleHttpPromiseStatus)
+            .then(resp => resp.json());
     }
 
     async resetStorage() {

@@ -136,7 +136,7 @@ export default commandLineArgs => {
                 resolve(),
                  */
                 resolve({
-                    resolveOnly: ['@datavillage-me/cage-template-core', '@datavillage-me/cage-template-engine', '@datavillage-me/api']
+                    resolveOnly: ['@datavillage-me/cage-template-core', '@datakluis/datakluis-testapp-engine', '@datavillage-me/api']
                 }),
                 copy({
                     targets: [
