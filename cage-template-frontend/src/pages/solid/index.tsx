@@ -5,6 +5,7 @@ import { PromiseStateContainer} from "../../utils/ui-utils";
 import {Profile} from "./profile";
 import {DvTemplateAuth} from "../../auth";
 import {util} from '@datavillage-me/api';
+import {Recommandations} from "./recommandations";
 
 function TabPanel(props: {
     children?: React.ReactNode;
@@ -76,7 +77,7 @@ export const SolidDashboard = () => {
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>
-                        <h1>Recommandations</h1>
+                        <Recommandations podUrl={session.podUrl} fetch={session.fetch}/>
                     </TabPanel>
                 </>}
 

@@ -5,7 +5,6 @@ import './app.scss';
 import {Welcome} from "./pages/welcome";
 import {AdminPanel} from "./pages/admin";
 import {SolidDashboard} from "./pages/solid";
-import {SearchAndRec} from "./pages/recommandations";
 import {DvTemplateAuth} from "./auth";
 import {AppNavBar} from "./navbar";
 import {ErrorBoundary} from "./utils/ui-utils";
@@ -17,12 +16,6 @@ const routes = [
         component: Welcome,
         exact: true,
         path: '/',
-        requiresAuth: false
-    },
-    {
-        component: SearchAndRec,
-        exact: true,
-        path: '/search',
         requiresAuth: false
     },
     {

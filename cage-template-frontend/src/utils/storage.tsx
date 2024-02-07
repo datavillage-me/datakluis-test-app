@@ -1,5 +1,5 @@
 import {useMemo} from "react";
-import {PersonalProfile, PROFILE_PATH} from "@datavillage-me/cage-template-core";
+import {PersonalProfile, PROFILE_PATH, RECOMMANDATIONS_PATH, Recommendation} from "@datavillage-me/cage-template-core";
 import {CachedPromiseState, usePromiseFn} from "@datavillage-me/dv-common-ui";
 import {httputil} from "@datavillage-me/api";
 import {DvTemplateAuth} from "../auth";
@@ -27,12 +27,23 @@ export function useProfile(podUrl?: string, fetchFn?: typeof fetch): WritablePro
     return profile$ as WritablePromiseState<PersonalProfile | undefined>;
 }
 
+export function useRecommandations(podUrl?: string, fetchFn?: typeof fetch) {
+    const recommandations$ = usePromiseFn(
+        async () => podUrl ?
+            await (fetchFn || fetch)(podUrl + RECOMMANDATIONS_PATH).then(httputil.handleHttpPromiseStatus).then(resp => resp.json() as Promise<Recommendation[]>).catch(httputil._404_undefined) :
+            undefined,
+        [fetchFn, podUrl]);
+
+    return recommandations$;
+}
+
 export function useStorage(fetchFn?: typeof fetch) {
 
     const session = DvTemplateAuth.useSession();
     const f = fetchFn || session.fetch;
     const storage = useMemo(() => ({
-        useProfile: () => useProfile(session.podUrl, f)
+        useProfile: () => useProfile(session.podUrl, f),
+        useRecommandations: () => useRecommandations(session.podUrl, f)
     }), [f, session.podUrl])
 
     return storage;

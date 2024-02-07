@@ -21,7 +21,10 @@ export class RecommandationEngine {
         if (userProfile) {
             // TODO produce recommendations
 
-            return [];
+            return [
+                {title: 'Fake Recommandation 1', objectUri: 'https://acme.com/objects/001', score: 0.6, timestamp: new Date().toISOString()},
+                {title: 'Fake Recommandation 2', objectUri: 'https://acme.com/objects/002', score: 0.2, timestamp: new Date().toISOString()}
+            ];
         } else {
             throw new Error("User does not exist");
         }
