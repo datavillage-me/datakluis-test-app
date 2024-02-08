@@ -22,5 +22,10 @@ export type PersonalProfile = {
             action: string,
             timestamp: string
         }[]
+
+    /**
+     * unique identifier, as a URI
+     */
+    notificationEmail?: string;
 }
 

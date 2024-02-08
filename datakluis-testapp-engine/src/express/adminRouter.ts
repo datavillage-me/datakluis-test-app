@@ -1,6 +1,7 @@
 import {Request} from "express";
 import createPromiseRouter from 'express-promise-router';
 import {getUsersRegistry} from "./index";
+import {requireDevRole} from "./auth";
 
 /**
  * A set of endpoints to administrate the engine itself.
@@ -10,11 +11,12 @@ import {getUsersRegistry} from "./index";
 export const AdminRouter = () => {
     const router = createPromiseRouter();
 
-
     /**
      * Return the list of registered users
      */
     router.get('/users', async (req: Request<void, any, void, void>, res) => {
+
+        requireDevRole(req);
 
         // retrieve the user registry from the app context
         const userReg = getUsersRegistry(req.app);

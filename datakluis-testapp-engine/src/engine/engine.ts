@@ -1,5 +1,6 @@
 import {UsersRegistry} from "../users/pds";
 import {Recommendation} from "@datavillage-me/cage-template-core";
+import { sendEmail } from "./email";
 
 export class RecommandationEngine {
 
@@ -34,7 +35,7 @@ export class RecommandationEngine {
         return this.userReg.getUserAppStorage(userId).then(store => store.saveRecommandations(recommendations));
     }
 
-    async createAndStoreRecommandationsForUsers(userIds?: string[]) {
+    async createAndStoreRecommandationsForUsers(userIds?: string[], email?: boolean) {
 
         userIds = userIds || await this.getUsers();
 
@@ -44,8 +45,13 @@ export class RecommandationEngine {
         for (let idx in userIds) {
             const userId = userIds[idx];
             try {
+                const storage = await this.userReg.getUserAppStorage(userId);
+                const profile = await storage.getUserProfile();
+
                 const recos = await this.getRecommandations(userId);
                 await this.storeRecommandations(userId, recos);
+
+                if (email && profile?.notificationEmail) sendEmail(profile.notificationEmail)
             } catch (err) {
                 console.warn(`Failed to produce or store recommendations for user ${userId} : ${err}`);
             }

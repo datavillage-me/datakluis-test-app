@@ -34,6 +34,7 @@ export const ProfileEditor = () => {
     </div>
 }
 
+const MonacoEditor = lazy(() => import('../../utils/monaco').then(module => ({default: module.MonacoEditor})));
 
 export const RawResourceEditor = (props: { resourceUrl: string, fetch: typeof fetch, reset?: () => void }) => {
 
@@ -51,8 +52,6 @@ export const RawResourceEditor = (props: { resourceUrl: string, fetch: typeof fe
         return props.fetch(props.resourceUrl, {method: 'PUT', body: str});
     }, [props.fetch, props.resourceUrl]);
 
-    const MonacoEditor = lazy(() => import('../../utils/monaco').then(module => ({default: module.MonacoEditor})));
-
     return <div>
         Displaying resource at {props.resourceUrl}<br/>
         <Button variant="contained" disabled={profileStr == editedStr} color="secondary"
@@ -62,7 +61,7 @@ export const RawResourceEditor = (props: { resourceUrl: string, fetch: typeof fe
         {props.reset ? <Button variant="contained" color="primary" onClick={props.reset}>Reset</Button> : null}
         <Suspense fallback={<div>Loading...</div>}>
             <ErrorBoundary>
-                <MonacoEditor text={profileStr || ''} language="json" onChange={setEditedStr}/>
+                <MonacoEditor key="resource-editor" text={profileStr || ''} language="json" onChange={setEditedStr}/>
             </ErrorBoundary>
         </Suspense>
     </div>

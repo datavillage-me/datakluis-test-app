@@ -159,7 +159,7 @@ const redisEventProcessor = (engine: RecommandationEngine) => (async (evt: {
             break;
         case 'PROCESS_USERS':
         // produce recommendations for all users
-            await engine.createAndStoreRecommandationsForUsers();
+            await engine.createAndStoreRecommandationsForUsers(undefined, originalMessage.email);
             break;
         default:
             console.log(`Unknown event ${evt.id}: type ${type}`);

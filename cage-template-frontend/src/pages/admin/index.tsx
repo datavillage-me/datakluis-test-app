@@ -29,7 +29,7 @@ export const AdminPanel = () => {
             <h2>Recommandation Engine Admin Panel</h2>
 
             <Button onClick={() => sendEvent('PING')}>Send PING event</Button>
-            <Button onClick={() => sendEvent(EVENT_TYPES_NAMES.PROCESS_USERS)}>Send 'process users' event</Button>
+            <Button onClick={() => sendEvent(EVENT_TYPES_NAMES.PROCESS_USERS, {email: true})}>Send 'process users' event</Button>
 
             <PromiseStateContainer promiseState={users$}>
                 {(users) =>
